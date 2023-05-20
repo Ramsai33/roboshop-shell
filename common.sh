@@ -37,7 +37,7 @@ Nodejs() {
   status_check
 
   print_head "Downloading App content"
-  curl -o /tmp/.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${LOG}
+  curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${LOG}
   status_check
 
   rm -rf /app/*
