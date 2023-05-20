@@ -60,7 +60,7 @@ LOAD_SCHEMA() {
 
   if [ ${schema_load}=="true" ]; then
 
-    if [ ${schema_type}=="mongodb" ]; then
+    if [ ${schema_type} == "mongodb" ]; then
 
     cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
 
@@ -74,7 +74,7 @@ LOAD_SCHEMA() {
 
     fi
 
-    if [ ${schema_type}=="mysql" ]; then
+    if [ ${schema_type} == "mysql" ]; then
     print_head "Install Mysql"
       yum install mysql -y &>>${LOG}
       status_check
