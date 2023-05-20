@@ -84,5 +84,7 @@ Nodejs() {
   systemctl start ${component} &>>${LOG}
   status_check
 
+  LOAD_SCHEMA
+
 
  }
