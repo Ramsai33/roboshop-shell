@@ -14,7 +14,7 @@ systemctl start mongod &>>${LOG}
 status_check
 
 print_head "changing Port adress"
-sed -i -e 's /127.0.0.1/0.0.0.0/gi' /etc/mongod.conf &>>${LOG}
+sed -i -e 's/127.0.0.1/0.0.0.0/gi' /etc/mongod.conf &>>${LOG}
 status_check
 
 print_head "Restart mongo"
