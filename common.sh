@@ -113,7 +113,7 @@ Nodejs() {
   LOAD_SCHEMA
 }
 
-MAVEN() {
+Maven() {
   print_head "Install Maven"
   yum install maven -y &>>${LOG}
   status_check
