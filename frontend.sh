@@ -2,7 +2,7 @@ source common.sh
 
 
 print_head "Installing nginx"
-yum install nginx -yum  &>>${LOG}
+yum install nginx -y  &>>${LOG}
 status_check
 
 print_head "Starting Service"
