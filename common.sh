@@ -56,7 +56,7 @@ SYSTEMD() {
 
 LOAD_SCHEMA() {
 
-  if [ ${schema_load}==true ]; then
+  if [ ${schema_load}=="true" ]; then
 
     if [ ${schema_type} == "mongodb" ]; then
 
