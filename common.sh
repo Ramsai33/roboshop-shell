@@ -15,6 +15,25 @@ status_check() {
   fi
 }
 
+LOAD_SCHEMA() {
+
+  if [ ${schema_load}=="true" ]; then
+
+    cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
+
+    print_head "Install MONGODB"
+    yum install mongodb-org-shell -y &>>${LOG}
+    status_check
+
+    print_head "Load schema"
+    mongo --host mongodb-dev.ramdevops35.online </app/schema/${component}.js &>>${LOG}
+    status_check
+  fi
+
+}
+
+
+
 Nodejs() {
 
   print_head "Downloading Nodejs repo"
@@ -65,17 +84,5 @@ Nodejs() {
   systemctl start ${component} &>>${LOG}
   status_check
 
-if [ ${schema_load}=="true" ]; then
 
-  cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
-
-  print_head "Install MONGODB"
-  yum install mongodb-org-shell -y &>>${LOG}
-  status_check
-
-  print_head "Load schema"
-  mongo --host mongodb-dev.ramdevops35.online </app/schema/${component}.js &>>${LOG}
-  status_check
-fi
-
-}
+ }
