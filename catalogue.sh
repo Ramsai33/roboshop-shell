@@ -23,6 +23,8 @@ print_head "Downloading App content"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${LOG}
 status_check
 
+rm -rf /app*
+
 print_head "Extracting App content"
 cd /app
 unzip /tmp/catalogue.zip &>>${LOG}
