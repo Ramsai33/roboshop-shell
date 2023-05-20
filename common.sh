@@ -50,8 +50,6 @@ SYSTEMD() {
     systemctl enable ${component} &>>${LOG}
     systemctl start ${component} &>>${LOG}
     status_check
-
-
 }
 
 
