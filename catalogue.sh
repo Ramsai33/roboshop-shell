@@ -9,7 +9,7 @@ yum install nodejs -y &>>${LOG}
 status_check
 
 print_head "Adding user"
-id roboshop
+id roboshop &>>${LOG}
 if [ $? -ne 0 ]; then
   useradd roboshop &>>${LOG}
   status_check
@@ -45,6 +45,8 @@ print_head "Starting catalogue service"
 systemctl enable catalogue &>>${LOG}
 systemctl start catalogue &>>${LOG}
 status_check
+
+cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
 
 print_head "Install MONGODB"
 yum install mongodb-org-shell -y &>>${LOG}
