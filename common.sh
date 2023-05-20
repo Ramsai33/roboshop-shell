@@ -14,3 +14,65 @@ status_check() {
     exit
   fi
 }
+
+Nodejs() {
+
+  print_head "Downloading Nodejs repo"
+  curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${LOG}
+  status_check
+
+  print_head "Installing Nodejs"
+  yum install nodejs -y &>>${LOG}
+  status_check
+
+  print_head "Adding user"
+  id roboshop &>>${LOG}
+  if [ $? -ne 0 ]; then
+    useradd roboshop &>>${LOG}
+    status_check
+  fi
+
+  print_head "Creating App directory"
+  mkdir -p /app &>>${LOG}
+  status_check
+
+  print_head "Downloading App content"
+  curl -o /tmp/.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${LOG}
+  status_check
+
+  rm -rf /app/*
+
+  print_head "Extracting App content"
+  cd /app
+  unzip /tmp/${component}.zip &>>${LOG}
+  status_check
+
+  print_head "Downloading Dependencies"
+  cd /app
+  npm install &>>${LOG}
+  status_check
+
+  print_head "Copying Systemd"
+  cp ${script_location}/files/${component}.service /etc/systemd/system/${component}.service &>>${LOG}
+  status_check
+
+  print_head "daemon-reload"
+  systemctl daemon-reload &>>${LOG}
+  status_check
+
+  print_head "Starting ${component} service"
+  systemctl enable ${component} &>>${LOG}
+  systemctl start ${component} &>>${LOG}
+  status_check
+
+  cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
+
+  print_head "Install MONGODB"
+  yum install mongodb-org-shell -y &>>${LOG}
+  status_check
+
+  print_head "Load schema"
+  mongo --host mongodb-dev.ramdevops35.online </app/schema/${component}.js &>>${LOG}
+  status_check
+
+}
